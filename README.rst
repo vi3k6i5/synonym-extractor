@@ -11,6 +11,9 @@ Installation
 Usage
 ------
 ::
+    
+    # import module
+    from synonym.extractor import SynonymExtractor
 
     # Create an object of SynonymExtractor
     synonym_extractor = SynonymExtractor()
