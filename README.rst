@@ -5,6 +5,7 @@ synonym-extractor
 Why
 -----
 
+``
 Say you have a corpus where similar words appear very frequently.
 
 eg: Last weekened I was in NY.
@@ -26,7 +27,7 @@ With this library I am able to process 2.5M docs and 10K synonyms in 15 mins.
 
 The idea for this library came from the following `StackOverflow question
 <https://stackoverflow.com/questions/44178449/regex-replace-is-taking-time-for-millions-of-documents-how-to-make-it-faster>`_.
-
+``
 
 Installation
 -------
