@@ -6,19 +6,20 @@ Why
 -----
 
 Say you have a corpus where similar words appear very frequently.
+
 eg: Last weekened I was in NY.
-    I am traveling to new york next weekend.
+I am traveling to new york next weekend.
 
 If you train a word2vec model on this or do any sort of NLP it will treat NY and ney york as 2 different words. Instead if you create a synonym dictionary like:
+
 eg: NY=>new york
-    new york=>new york
+new york=>new york
+
 then you can extract NY and new york as the same text.
 
 If you are thinking this can be done with a simple regex, you are right.
 I was doing this with a regex for a long time.
-
 My corpus was 1.5 Million docs and 2K synonyms. It used to take python approx 16 hours to process through.
-
 Recently my corpus went up to 2.5 Million docs and some 10K plus synonyms. Now it was going to take me 15 days to process.
 
 With this library I am able to process 2.5M docs and 10K synonyms in 15 mins.
