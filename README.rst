@@ -25,7 +25,7 @@ Usage
     synonyms_found = synonym_extractor.get_synonyms_from_sentence('I love SF and NY')
 
     synonyms_found
-    >> ['new york', 'san francisco']
+    >> ['san francisco', 'new york']
 
 Algorithm
 ----------
