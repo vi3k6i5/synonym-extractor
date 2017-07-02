@@ -11,6 +11,37 @@ Basically say I have a vocabulary of 10K words and I want to get all the words f
 
 Hence we use a simpler yet much faster algorithm to get the desired result.
 
+Why
+------
+
+::
+
+Say you have a corpus where similar words appear frequently.
+
+eg: Last weekened I was in NY.
+    I am traveling to new york next weekend.
+
+If you train a word2vec model on this or do any sort of NLP it will treat NY and new york as 2 different words. 
+
+Instead if you create a synonym dictionary like:
+
+eg: NY=>new york
+    new york=>new york
+
+Then you can extract NY and new york as the same text.
+
+To do the same with regex it will take a lot of time:
+
+============  ========== = =========  ============
+Docs count    # Synonyms : Regex      synonym-extractor
+============  ========== = =========  ============
+1.5 million   2K         : 16 hours   NA
+2.5 million   10K        : 15 days    15 mins
+============  ========== = =========  ============
+
+The idea for this library came from the following `StackOverflow question
+<https://stackoverflow.com/questions/44178449/regex-replace-is-taking-time-for-millions-of-documents-how-to-make-it-faster>`_.
+
 
 Installation
 ------------
@@ -39,14 +70,16 @@ Get synonyms present in sentence::
     >>> synonyms_found
     ['new york', 'san francisco']
 
+Define Synonyms
+~~~~~~~~~~~~~~~~~
 
-There are 2 ways to define synonyms::
+There are 2 ways to define synonyms
 
-1. Is to add to the synonym by calling add_to_synonym method::
+* Build iteratively::
 
     >>> synonym_extractor.add_to_synonym('madras', 'chennai')
 
-2. Pass a file path::
+* Pass a file path::
 
     >>> # Format supported is 
     >>> #     madras=>chennai
@@ -56,15 +89,18 @@ There are 2 ways to define synonyms::
 
 .. note:: Synonyms are case sensitive. You will be adviced to lower case all text if you want case insensitive match.
 
-
-get_synonyms_from_sentence()::
+Extract Synonyms
+~~~~~~~~~~~~~~~~~
+::
 
     >>> # This method extracts all matching synonyms in the sentense and returns a list
 
     >>> synonym_extractor.get_synonyms_from_sentence('i love NY')
     ['new york']
 
-_set_white_space_chars()::
+Replace Internal White Space Characters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+::
 
     >>> # change the internal white space characters
 
