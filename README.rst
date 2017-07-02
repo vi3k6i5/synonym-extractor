@@ -4,11 +4,13 @@ synonym-extractor
 
 Installation
 -------
+::
 
     pip install synonym-extractor
 
 Usage
 ------
+::
 
     # Create an object of SynonymExtractor
     synonym_extractor = SynonymExtractor()
