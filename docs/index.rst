@@ -21,65 +21,55 @@ Installation
 API Reference
 -------------
 
-.. module:: synonym.extractor
+Begin by importing the module::
 
-.. class:: SynonymExtractor()
+    >>> from synonym.extractor import SynonymExtractor
 
-    ``Usage``::
+Add synonyms to the class::
 
-        # Create an object of SynonymExtractor
-        synonym_extractor = SynonymExtractor()
+    >>> synonym_names = ['NY', 'SF']
+    >>> clean_names = ['new york', 'san francisco']
 
-        # add synonyms to it
-        synonym_names = ['NY', 'SF']
-        clean_names = ['new york', 'san francisco']
+    >>> for synonym_name, clean_name in zip(synonym_names, clean_names):
+    >>>     synonym_extractor.add_to_synonym(synonym_name, clean_name)
 
-        for synonym_name, clean_name in zip(synonym_names, clean_names):
-            synonym_extractor.add_to_synonym(synonym_name, clean_name)
+Get synonyms present in sentence::
 
-        synonyms_found = synonym_extractor.get_synonyms_from_sentence('I love SF and NY')
-
-    ``Output``::
-
-        synonyms_found
-        >> ['new york', 'san francisco']
+    >>> synonyms_found = synonym_extractor.get_synonyms_from_sentence('I love SF and NY')
+    >>> synonyms_found
+    ['new york', 'san francisco']
 
 
-    .. method:: add_to_synonym()
+There are 2 ways to define synonyms::
 
-        # There are 2 ways to define synonyms.
+1. Is to add to the synonym by calling add_to_synonym method::
 
-        # 1. Is to add to the synonym by calling this method
+    >>> synonym_extractor.add_to_synonym('madras', 'chennai')
 
-        synonym_extractor.add_to_synonym('madras', 'chennai')
+2. Pass a file path::
 
-    .. method:: build_synonym()
+    >>> # Format supported is 
+    >>> #     madras=>chennai
+    >>> #     SF=>san francisco
 
-        # 2. Pass a file path
+    >>> synonym_extractor.build_synonym('/file_path_to_synonyms.txt')
 
-        # Format supported is 
-        #     madras=>chennai
-        #     SF=>san francisco
-
-        synonym_extractor.build_synonym('/file_path_to_synonyms.txt')
+.. note:: Synonyms are case sensitive. You will be adviced to lower case all text if you want case insensitive match.
 
 
-        Note: Synonyms are case sensitive. You will be adviced to lower case all text if you want case insensitive match.
+get_synonyms_from_sentence()::
 
+    >>> # This method extracts all matching synonyms in the sentense and returns a list
 
-    .. method:: get_synonyms_from_sentence()
+    >>> synonym_extractor.get_synonyms_from_sentence('i love NY')
+    ['new york']
 
-        # This method extracts all matching synonyms in the sentense and returns a list
+_set_white_space_chars()::
 
-        synonym_extractor.get_synonyms_from_sentence('i love NY')
-        >> ['new york']
+    >>> # change the internal white space characters
 
-    .. method:: _set_white_space_chars() 
-
-        # change the internal white space characters
-
-        synonym_extractor = SynonymExtractor()
-        synonym_extractor._set_white_space_chars(set(['.', ' ']))
+    >>> synonym_extractor = SynonymExtractor()
+    >>> synonym_extractor._set_white_space_chars(set(['.', ' ']))
 
 
 Contribute
