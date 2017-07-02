@@ -45,13 +45,15 @@ API Reference
         >> ['new york', 'san francisco']
 
 
-    ``Define synonyms``::
+    .. method:: add_to_synonym()
 
         # There are 2 ways to define synonyms.
 
         # 1. Is to add to the synonym by calling this method
 
         synonym_extractor.add_to_synonym('madras', 'chennai')
+
+    .. method:: build_synonym()
 
         # 2. Pass a file path
 
@@ -62,17 +64,19 @@ API Reference
         synonym_extractor.build_synonym('/file_path_to_synonyms.txt')
 
 
-    Note: Synonyms are case sensitive. You will be adviced to lower case all text if you want case insensitive match.
+        Note: Synonyms are case sensitive. You will be adviced to lower case all text if you want case insensitive match.
 
 
-    ``get synonyms from sentence``::
+    .. method:: get_synonyms_from_sentence()
 
         # This method extracts all matching synonyms in the sentense and returns a list
 
         synonym_extractor.get_synonyms_from_sentence('i love NY')
         >> ['new york']
 
-    ``change the internal white space characters``::
+    .. method:: _set_white_space_chars() 
+
+        # change the internal white space characters
 
         synonym_extractor = SynonymExtractor()
         synonym_extractor._set_white_space_chars(set(['.', ' ']))
