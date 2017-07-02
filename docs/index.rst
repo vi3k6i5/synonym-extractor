@@ -1,22 +1,92 @@
-.. synonym-extractor documentation master file, created by
-   sphinx-quickstart on Sun Jul  2 13:49:13 2017.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
-Welcome to synonym-extractor's documentation!
+Welcome to Synonym Extractor's documentation!
 =============================================
 
-Contents:
 
-.. toctree::
-   :maxdepth: 2
+Synonym Extractor is a python library that based on `Aho-Corasick algorithm
+<https://en.wikipedia.org/wiki/Aho%E2%80%93Corasick_algorithm>`_.
+
+The idea is to extract words that we care about from a given sentence in one pass.
+
+Basically say I have a vocabulary of 10K words and I want to get all the words from that set present in a sentence. A simple regex match will take a lot of time to loop over the 10K documents.
+
+Hence we use a simpler yet much faster algorithm to get the desired result.
+
+
+Installation
+------------
+::
+
+    pip install synonym-extractor
+
+API Reference
+-------------
+
+.. module:: synonym.extractor
+
+.. class:: SynonymExtractor()
+
+    ``Usage``::
+
+        # Create an object of SynonymExtractor
+        synonym_extractor = SynonymExtractor()
+
+        # add synonyms to it
+        synonym_names = ['javaee', 'j2ee', 'java']
+        clean_names = ['java', 'java', 'java']
+
+        for synonym_name, clean_name in zip(synonym_names, clean_names):
+            synonym_extractor.add_to_synonym(synonym_name, clean_name)
+
+        synonyms_found = synonym_extractor.get_synonyms_from_sentence('javaee is my language, j2ee is my code')
+
+    ``Output``::
+
+        synonyms_found
+        >> ['java', 'java']
+
+
+    ``Define synonyms``::
+
+        # There are 2 ways to define synonyms.
+
+        # 1. Is to add to the synonym by calling this method
+
+        synonym_extractor.add_to_synonym('NY', 'new york')
+
+        # 2. Pass a file path
+
+        # Format supported is 
+        #     java_2e=>java
+        #     java programing=>java
+
+        synonym_extractor.build_synonym('/file_path_to_synonyms.txt')
 
 
 
-Indices and tables
-==================
+    Note: Synonyms are case sensitive. You will be adviced to lower case all text if you want case insensitive match.
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
 
+    ``get synonyms from sentence``::
+
+        # This method extracts all matching synonyms in the sentense and returns a list
+
+        synonym_extractor.get_synonyms_from_sentence('i love NY')
+        >> ['new york']
+
+    ``change the internal white space characters``::
+
+        synonym_extractor = SynonymExtractor()
+        synonym_extractor._set_white_space_chars(set(['.', ' ']))
+
+
+Contribute
+----------
+
+- Issue Tracker: https://github.com/vi3k6i5/synonym-extractor/issues
+- Source Code: https://github.com/vi3k6i5/synonym-extractor/
+
+
+License
+-------
+
+The project is licensed under the MIT license.

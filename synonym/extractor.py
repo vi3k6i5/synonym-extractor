@@ -3,9 +3,7 @@ import os
 
 class SynonymExtractor(object):
 
-    def __init__(self, synonym_file=None, clean_text=False):
-        self.synonym_file = synonym_file
-        self.clean_text = clean_text
+    def __init__(self):
         self._end = '_end_'
         self._synonym = '_synonym_'
         self._white_space_chars = set(['.', '\t', '\n', '\a', ' '])

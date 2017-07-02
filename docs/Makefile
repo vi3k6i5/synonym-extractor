@@ -91,9 +91,9 @@ qthelp:
 	@echo
 	@echo "Build finished; now you can run "qcollectiongenerator" with the" \
 	      ".qhcp project file in $(BUILDDIR)/qthelp, like this:"
-	@echo "# qcollectiongenerator $(BUILDDIR)/qthelp/synonym-extractor.qhcp"
+	@echo "# qcollectiongenerator $(BUILDDIR)/qthelp/SynonymExtractor.qhcp"
 	@echo "To view the help file:"
-	@echo "# assistant -collectionFile $(BUILDDIR)/qthelp/synonym-extractor.qhc"
+	@echo "# assistant -collectionFile $(BUILDDIR)/qthelp/SynonymExtractor.qhc"
 
 .PHONY: applehelp
 applehelp:
@@ -110,8 +110,8 @@ devhelp:
 	@echo
 	@echo "Build finished."
 	@echo "To view the help file:"
-	@echo "# mkdir -p $$HOME/.local/share/devhelp/synonym-extractor"
-	@echo "# ln -s $(BUILDDIR)/devhelp $$HOME/.local/share/devhelp/synonym-extractor"
+	@echo "# mkdir -p $$HOME/.local/share/devhelp/SynonymExtractor"
+	@echo "# ln -s $(BUILDDIR)/devhelp $$HOME/.local/share/devhelp/SynonymExtractor"
 	@echo "# devhelp"
 
 .PHONY: epub

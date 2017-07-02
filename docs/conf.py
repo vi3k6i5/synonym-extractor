@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# synonym-extractor documentation build configuration file, created by
-# sphinx-quickstart on Sun Jul  2 13:49:13 2017.
+# Synonym Extractor documentation build configuration file, created by
+# sphinx-quickstart on Sun Jul  2 16:54:26 2017.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -30,7 +30,9 @@
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = []
+extensions = [
+    'sphinx.ext.autodoc',
+]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -49,7 +51,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'synonym-extractor'
+project = 'Synonym Extractor'
 copyright = '2017, Vikash Singh'
 author = 'Vikash Singh'
 
@@ -134,7 +136,7 @@ html_theme = 'alabaster'
 # The name for this set of Sphinx documents.
 # "<project> v<release> documentation" by default.
 #
-# html_title = 'synonym-extractor v0.1.0'
+# html_title = 'Synonym Extractor v0.1.0'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #
@@ -234,7 +236,7 @@ html_static_path = ['_static']
 # html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'synonym-extractordoc'
+htmlhelp_basename = 'SynonymExtractordoc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -260,7 +262,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'synonym-extractor.tex', 'synonym-extractor Documentation',
+    (master_doc, 'SynonymExtractor.tex', 'Synonym Extractor Documentation',
      'Vikash Singh', 'manual'),
 ]
 
@@ -302,7 +304,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'synonym-extractor', 'synonym-extractor Documentation',
+    (master_doc, 'synonymextractor', 'Synonym Extractor Documentation',
      [author], 1)
 ]
 
@@ -317,8 +319,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'synonym-extractor', 'synonym-extractor Documentation',
-     author, 'synonym-extractor', 'One line description of project.',
+    (master_doc, 'SynonymExtractor', 'Synonym Extractor Documentation',
+     author, 'SynonymExtractor', 'One line description of project.',
      'Miscellaneous'),
 ]
 
