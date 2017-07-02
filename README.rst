@@ -8,18 +8,18 @@ synonym-extractor
         synonym_extractor = SynonymExtractor()
 
         # add synonyms to it
-        synonym_names = ['javaee', 'j2ee', 'java']
-        clean_names = ['java', 'java', 'java']
+        synonym_names = ['NY', 'SF']
+        clean_names = ['new york', 'san francisco']
 
         for synonym_name, clean_name in zip(synonym_names, clean_names):
             synonym_extractor.add_to_synonym(synonym_name, clean_name)
 
-        synonyms_found = synonym_extractor.get_synonyms_from_sentence('javaee is my language, j2ee is my code')
+        synonyms_found = synonym_extractor.get_synonyms_from_sentence('I love SF and NY')
 
     ``Output``::
 
         synonyms_found
-        >> ['java', 'java']
+        >> ['new york', 'san francisco']
 
 Algorithm
 ----------

@@ -31,18 +31,18 @@ API Reference
         synonym_extractor = SynonymExtractor()
 
         # add synonyms to it
-        synonym_names = ['javaee', 'j2ee', 'java']
-        clean_names = ['java', 'java', 'java']
+        synonym_names = ['NY', 'SF']
+        clean_names = ['new york', 'san francisco']
 
         for synonym_name, clean_name in zip(synonym_names, clean_names):
             synonym_extractor.add_to_synonym(synonym_name, clean_name)
 
-        synonyms_found = synonym_extractor.get_synonyms_from_sentence('javaee is my language, j2ee is my code')
+        synonyms_found = synonym_extractor.get_synonyms_from_sentence('I love SF and NY')
 
     ``Output``::
 
         synonyms_found
-        >> ['java', 'java']
+        >> ['new york', 'san francisco']
 
 
     ``Define synonyms``::
@@ -51,16 +51,15 @@ API Reference
 
         # 1. Is to add to the synonym by calling this method
 
-        synonym_extractor.add_to_synonym('NY', 'new york')
+        synonym_extractor.add_to_synonym('madras', 'chennai')
 
         # 2. Pass a file path
 
         # Format supported is 
-        #     java_2e=>java
-        #     java programing=>java
+        #     madras=>chennai
+        #     SF=>san francisco
 
         synonym_extractor.build_synonym('/file_path_to_synonyms.txt')
-
 
 
     Note: Synonyms are case sensitive. You will be adviced to lower case all text if you want case insensitive match.
