@@ -2,32 +2,46 @@
 synonym-extractor
 ==============
 
-Why
------
+Synonym Extractor is a python library that based on `Aho-Corasick algorithm
+<https://en.wikipedia.org/wiki/Aho%E2%80%93Corasick_algorithm>`_.
 
-``
-Say you have a corpus where similar words appear very frequently.
+The idea is to extract words that we care about from a given sentence in one pass.
+
+Basically say I have a vocabulary of 10K words and I want to get all the words from that set present in a sentence. A simple regex match will take a lot of time to loop over the 10K documents.
+
+Hence we use a simpler yet much faster algorithm to get the desired result.
+
+Why
+------
+
+::
+
+Say you have a corpus where similar words appear frequently.
 
 eg: Last weekened I was in NY.
-I am traveling to new york next weekend.
+    I am traveling to new york next weekend.
 
-If you train a word2vec model on this or do any sort of NLP it will treat NY and ney york as 2 different words. Instead if you create a synonym dictionary like:
+If you train a word2vec model on this or do any sort of NLP it will treat NY and new york as 2 different words. 
+
+Instead if you create a synonym dictionary like:
 
 eg: NY=>new york
-new york=>new york
+    new york=>new york
 
-then you can extract NY and new york as the same text.
+Then you can extract NY and new york as the same text.
 
-If you are thinking this can be done with a simple regex, you are right.
-I was doing this with a regex for a long time.
-My corpus was 1.5 Million docs and 2K synonyms. It used to take python approx 16 hours to process through.
-Recently my corpus went up to 2.5 Million docs and some 10K plus synonyms. Now it was going to take me 15 days to process.
+To do the same with regex it will take a lot of time:
 
-With this library I am able to process 2.5M docs and 10K synonyms in 15 mins.
+============  ==========  =========  ============
+Docs count    # Synonyms  Regex      synonym-extractor
+============  ==========  =========  ============
+1.5 million   2K          16 hours   NA
+2.5 million   10K         15 days    15 mins
+============  ==========  =========  ============
 
 The idea for this library came from the following `StackOverflow question
 <https://stackoverflow.com/questions/44178449/regex-replace-is-taking-time-for-millions-of-documents-how-to-make-it-faster>`_.
-``
+
 
 Installation
 -------
