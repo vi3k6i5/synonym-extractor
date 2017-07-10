@@ -66,8 +66,8 @@ class SynonymExtractor(object):
                         current_dict_continued = current_dict[char]
 
                         idy = idx + 1
-                        while idy < candidate_info_len:
-                            inner_char = candidate_info[idy]
+                        while idy < sentence_len:
+                            inner_char = sentence[idy]
                             if inner_char in current_dict_continued:
                                 current_dict_continued = current_dict_continued[inner_char]
                             else:
