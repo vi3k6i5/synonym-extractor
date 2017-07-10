@@ -12,7 +12,7 @@ class SynonymExtractor(object):
     """
     use this method if you want to replace the inbuilt white space chars
     """
-    def _set_white_space_chars(white_space_chars):
+    def _set_white_space_chars(self, white_space_chars):
         self._white_space_chars = white_space_chars
 
     """
@@ -44,7 +44,7 @@ class SynonymExtractor(object):
         with open(synonym_file)as f:
             for line in f:
                 synonym_name, clean_name = line.split('=>')
-                add_to_synonym(unclean_name, clean_name.strip())
+                self.add_to_synonym(unclean_name, clean_name.strip())
 
     def get_synonyms_from_sentence(self, sentence):
         synonyms_extracted = []
@@ -61,25 +61,26 @@ class SynonymExtractor(object):
                     sequence_found = current_dict[self._synonym]
                     longest_sequence_found = current_dict[self._synonym]
 
-                    # re look for longest_sequence from current position onward
-                    # this longest sequence should be formed by current found word
-                    # and more words
-                    current_dict_continued = current_dict
-                    idy = idx + 1
-                    while idy < sentence_len:
-                        inner_char = sentence[idy]
-                        idy += 1
-                        if self._end in current_dict_continued:
-                            # update longest sequence found
-                            longest_sequence_found = current_dict_continued[self._synonym]
-                        if inner_char in current_dict_continued:
-                            current_dict_continued = current_dict_continued[inner_char]
-                        else:
-                            break
-                    if longest_sequence_found != sequence_found:
-                        idx = idy
+                    # re look for longest_sequence from this position
+                    if char in current_dict:
+                        current_dict_continued = current_dict[char]
+
+                        idy = idx + 1
+                        while idy < candidate_info_len:
+                            inner_char = candidate_info[idy]
+                            if inner_char in current_dict_continued:
+                                current_dict_continued = current_dict_continued[inner_char]
+                            else:
+                                break
+                            if self._end in current_dict_continued:
+                                # update longest sequence found
+                                longest_sequence_found = current_dict_continued[self._synonym]
+                            idy += 1
+                        if longest_sequence_found != sequence_found:
+                            idx = idy
                     current_dict = self.synonym_trie_dict
                     synonyms_extracted.append(longest_sequence_found)
+
                 elif char in current_dict:
                     # we can continue from whitespace also
                     current_dict = current_dict[char]
@@ -92,6 +93,14 @@ class SynonymExtractor(object):
             else:
                 # we reset current_dict
                 current_dict = self.synonym_trie_dict
+                # skip to end of word
+                idy = idx + 1
+                while idy < sentence_len:
+                    char = sentence[idy]
+                    if char in self._white_space_chars:
+                        break
+                    idy += 1
+                idx = idy
             # if we are end of sentence and have a sequence discovered
             if idx + 1 >= sentence_len:
                 if self._end in current_dict:
