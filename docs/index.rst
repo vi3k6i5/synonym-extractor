@@ -2,8 +2,7 @@ Welcome to Synonym Extractor's documentation!
 =============================================
 
 
-Synonym Extractor is a python library that is loosely based on Aho-Corasick algorithm
-<https://en.wikipedia.org/wiki/Aho%E2%80%93Corasick_algorithm>`_.
+Synonym Extractor is a python library that is loosely based on `Aho-Corasick algorithm <https://en.wikipedia.org/wiki/Aho%E2%80%93Corasick_algorithm>`_.
 
 The idea is to extract words that we care about from a given sentence in one pass.
 
