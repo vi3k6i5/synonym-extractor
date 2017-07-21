@@ -56,10 +56,16 @@ Begin by importing the module::
 
     >>> from synonym.extractor import SynonymExtractor
 
+Create object::
+
+    >>> synonym_extractor = SynonymExtractor()
+    >>> # by default SynonymExtractor is case insensitive.
+    >>> # for case_sensitive use SynonymExtractor(case_sensitive=True)
+
 Add synonyms to the class::
 
     >>> synonym_names = ['NY', 'new-york', 'SF']
-    >>> clean_names = ['new york', 'new york', 'san francisco']
+    >>> clean_names = ['New York', 'New York', 'san francisco']
 
     >>> for synonym_name, clean_name in zip(synonym_names, clean_names):
     >>>     synonym_extractor.add_to_synonym(synonym_name, clean_name)
@@ -68,26 +74,35 @@ Get synonyms present in sentence::
 
     >>> synonyms_found = synonym_extractor.get_synonyms_from_sentence('I love SF and NY. new-york is the best.')
     >>> synonyms_found
-    ['san francisco', 'new york', 'new york']
+    ['san francisco', 'New York', 'New York']
 
 Define Synonyms
 ~~~~~~~~~~~~~~~~~
 
-There are 2 ways to define synonyms
+There are 3 ways to define synonyms
 
 * Build iteratively::
 
     >>> synonym_extractor.add_to_synonym('madras', 'chennai')
+
+* Build with a dict::
+
+    >>> synonymys_dict = {
+    >>>     "java":["java_2e","java programing"],
+    >>>     "product management":["PM", "product manager"]
+    >>> }
+    >>> synonym_extractor.add_to_synonyms_from_dict(synonymys_dict)
 
 * Pass a file path::
 
     >>> # Format supported is 
     >>> #     madras=>chennai
     >>> #     SF=>san francisco
+    >>> #     NY=>New York
+    >>> #     new-york=>New York
 
     >>> synonym_extractor.build_synonym('/file_path_to_synonyms.txt')
 
-.. note:: Synonyms are case sensitive. You will be adviced to lower case all text if you want case insensitive match.
 
 Extract Synonyms
 ~~~~~~~~~~~~~~~~~
@@ -95,8 +110,8 @@ Extract Synonyms
 
     >>> # This method extracts all matching synonyms in the sentense and returns a list
 
-    >>> synonym_extractor.get_synonyms_from_sentence('i love NY')
-    ['new york']
+    >>> synonym_extractor.get_synonyms_from_sentence('I love SF and NY. New-york is the best.')
+    ['san francisco', 'New York', 'New York']
 
 Replace Internal White Space Characters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

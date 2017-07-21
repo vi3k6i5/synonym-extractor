@@ -3,14 +3,15 @@ import os
 
 class SynonymExtractor(object):
 
-    def __init__(self):
+    def __init__(self, case_sensitive=False):
         self._end = '_end_'
         self._synonym = '_synonym_'
         self._white_space_chars = set(['.', '\t', '\n', '\a', ' '])
         self.synonym_trie_dict = dict()
+        self.case_sensitive = case_sensitive
 
     """
-    use this method if you want to replace the inbuilt white space chars
+        use this method if you want to replace the inbuilt white space chars
     """
     def _set_white_space_chars(self, white_space_chars):
         self._white_space_chars = white_space_chars
@@ -23,6 +24,8 @@ class SynonymExtractor(object):
     """
     def add_to_synonym(self, synonym_name, clean_name):
         if synonym_name and clean_name:
+            if not self.case_sensitive:
+                synonym_name = synonym_name.lower()
             current_dict = self.synonym_trie_dict
             for letter in synonym_name:
                 current_dict = current_dict.setdefault(letter, {})
@@ -44,9 +47,28 @@ class SynonymExtractor(object):
         with open(synonym_file)as f:
             for line in f:
                 synonym_name, clean_name = line.split('=>')
+                if not self.case_sensitive:
+                    synonym_name = synonym_name.lower()
                 self.add_to_synonym(unclean_name, clean_name.strip())
 
+    """
+        if you want to add synonyms from a dictionary
+        Dict format should be like:
+        {
+            "java":["java_2e","java programing"],
+            "product management":["PM", "product manager"]
+        }
+    """
+    def add_to_synonyms_from_dict(self, synonym_dict):
+        for clean_name, synonym_names in synonym_dict.items():
+            for synonym_name in synonym_names:
+                if not self.case_sensitive:
+                    synonym_name = synonym_name.lower()
+                self.add_to_synonym(synonym_name, clean_name)
+
     def get_synonyms_from_sentence(self, sentence):
+        if not self.case_sensitive:
+            sentence = sentence.lower()
         synonyms_extracted = []
         current_dict = self.synonym_trie_dict
         idx = 0
