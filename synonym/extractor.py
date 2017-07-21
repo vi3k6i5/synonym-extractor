@@ -55,11 +55,15 @@ class SynonymExtractor(object):
             char = sentence[idx]
             # when we reach whitespace
             if char in self._white_space_chars:
+
                 # if end is present in current_dict
-                if self._end in current_dict:
+                if self._end in current_dict or char in self.current_dict:
                     # update longest sequence found
-                    sequence_found = current_dict[self._synonym]
-                    longest_sequence_found = current_dict[self._synonym]
+                    sequence_found = None
+                    longest_sequence_found = None
+                    if self._end in current_dict:
+                        sequence_found = current_dict[self._synonym]
+                        longest_sequence_found = current_dict[self._synonym]
 
                     # re look for longest_sequence from this position
                     if char in current_dict:
@@ -79,11 +83,9 @@ class SynonymExtractor(object):
                         if longest_sequence_found != sequence_found:
                             idx = idy
                     current_dict = self.synonym_trie_dict
-                    synonyms_extracted.append(longest_sequence_found)
+                    if longest_sequence_found:
+                        synonyms_extracted.append(longest_sequence_found)
 
-                elif char in current_dict:
-                    # we can continue from whitespace also
-                    current_dict = current_dict[char]
                 else:
                     # we reset current_dict
                     current_dict = self.synonym_trie_dict
