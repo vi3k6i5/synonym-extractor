@@ -57,7 +57,7 @@ class SynonymExtractor(object):
             if char in self._white_space_chars:
 
                 # if end is present in current_dict
-                if self._end in current_dict or char in self.current_dict:
+                if self._end in current_dict or char in current_dict:
                     # update longest sequence found
                     sequence_found = None
                     longest_sequence_found = None

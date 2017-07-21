@@ -2,7 +2,7 @@
 synonym-extractor
 ==============
 
-Synonym Extractor is a python library that based on `Aho-Corasick algorithm
+Synonym Extractor is a python library that is loosely based on `Aho-Corasick algorithm
 <https://en.wikipedia.org/wiki/Aho%E2%80%93Corasick_algorithm>`_.
 
 The idea is to extract words that we care about from a given sentence in one pass.
@@ -27,17 +27,17 @@ Usage
     # Create an object of SynonymExtractor
     synonym_extractor = SynonymExtractor()
 
-    # add synonyms to it
-    synonym_names = ['NY', 'SF']
-    clean_names = ['new york', 'san francisco']
+    # add synonyms
+    synonym_names = ['NY', 'new-york', 'SF']
+    clean_names = ['new york', 'new york', 'san francisco']
 
     for synonym_name, clean_name in zip(synonym_names, clean_names):
         synonym_extractor.add_to_synonym(synonym_name, clean_name)
 
-    synonyms_found = synonym_extractor.get_synonyms_from_sentence('I love SF and NY')
+    synonyms_found = synonym_extractor.get_synonyms_from_sentence('I love SF and NY. new-york is the best.')
 
     synonyms_found
-    >> ['san francisco', 'new york']
+    >> ['san francisco', 'new york', 'new york']
 
 
 Algorithm
