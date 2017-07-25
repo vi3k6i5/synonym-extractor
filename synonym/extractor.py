@@ -2,6 +2,51 @@ import os
 
 
 class SynonymExtractor(object):
+    """SynonymExtractor
+
+    Parameters
+    ----------
+    case_sensitive : boolean, default False
+        If you want the module to be case sensitive set it to True
+
+    Attributes
+    ----------
+    `_end` : string, default '_end_'
+        used to denote end of work in synonym_trie_dict
+    `_synonym` : string, default '_synonym_'
+        key in dict. used to store cleaned synonym name which will be returned
+    `_white_space_chars` : set, default set(['.', '\t', '\n', '\a', ' '])
+        values which will be used to identify if we have reached end of term
+    `synonym_trie_dict` : dict, default {}
+        trie dict built character by character, that is used for lookup
+    `case_sensitive` : boolean, default False
+        if the algorithm should be case sensitive or not
+
+    Examples
+    --------
+    >>> # import module
+    >>> from synonym.extractor import SynonymExtractor
+
+    >>> # Create an object of SynonymExtractor
+    >>> synonym_extractor = SynonymExtractor()
+
+    >>> # add synonyms
+    >>> synonym_names = ['NY', 'new-york', 'SF']
+    >>> clean_names = ['new york', 'new york', 'san francisco']
+
+    >>> for synonym_name, clean_name in zip(synonym_names, clean_names):
+    >>>     synonym_extractor.add_to_synonym(synonym_name, clean_name)
+
+    >>> synonyms_found = synonym_extractor.get_synonyms_from_sentence('I love SF and NY. new-york is the best.')
+
+    >>> synonyms_found
+    >>> ['san francisco', 'new york', 'new york']
+
+    References
+    ----------
+    loosely based on https://en.wikipedia.org/wiki/Aho%E2%80%93Corasick_algorithm.
+    Idea came from this question https://stackoverflow.com/questions/44178449/regex-replace-is-taking-time-for-millions-of-documents-how-to-make-it-faster
+    """
 
     def __init__(self, case_sensitive=False):
         self._end = '_end_'
@@ -10,19 +55,29 @@ class SynonymExtractor(object):
         self.synonym_trie_dict = dict()
         self.case_sensitive = case_sensitive
 
-    """
-        use this method if you want to replace the inbuilt white space chars
-    """
     def _set_white_space_chars(self, white_space_chars):
+        """use this method if you want to replace the inbuilt white space chars
+        Parameters
+        ----------
+        white_space_chars: set
+            Set of characters that will be considered as whitespaces.
+            This will denote that the term has ended.
+        """
         self._white_space_chars = white_space_chars
 
-    """
+    def add_to_synonym(self, synonym_name, clean_name):
+        """
         if you want to add one or more synonym to the dictionary
         pass the synonym name and the clean name it maps to
         synonym_name: Name of the synonym
         clean_name: clean word
-    """
-    def add_to_synonym(self, synonym_name, clean_name):
+        Parameters
+        ----------
+        synonym_name : string
+            keyword that you want to identify
+        clean_name : string
+            clean term for that keyword that you would want to get back in return
+        """
         if synonym_name and clean_name:
             if not self.case_sensitive:
                 synonym_name = synonym_name.lower()
@@ -32,16 +87,19 @@ class SynonymExtractor(object):
             current_dict[self._synonym] = clean_name
             current_dict[self._end] = self._end
 
-    """
+    def build_synonym(self, synonym_file):
+        """
         if you want to add synonyms from a file
         synonym file format should be like:
         java_2e=>java
         java programing=>java
         product management=>product management
         product management techniques=>product management
-    """
-    def build_synonym(self, synonym_file):
-        # build the synonyms
+
+        Parameters
+        ----------
+        synonym_file : path
+        """
         if not os.path.isfile(synonym_file):
             raise("Invalid file path %s".format(synonym_file))
         with open(synonym_file)as f:
@@ -51,15 +109,15 @@ class SynonymExtractor(object):
                     synonym_name = synonym_name.lower()
                 self.add_to_synonym(unclean_name, clean_name.strip())
 
-    """
+    def add_to_synonyms_from_dict(self, synonym_dict):
+        """
         if you want to add synonyms from a dictionary
         Dict format should be like:
         {
-            "java":["java_2e","java programing"],
+            "java":["java_2e", "java programing"],
             "product management":["PM", "product manager"]
         }
-    """
-    def add_to_synonyms_from_dict(self, synonym_dict):
+        """
         for clean_name, synonym_names in synonym_dict.items():
             for synonym_name in synonym_names:
                 if not self.case_sensitive:
@@ -67,6 +125,16 @@ class SynonymExtractor(object):
                 self.add_to_synonym(synonym_name, clean_name)
 
     def get_synonyms_from_sentence(self, sentence):
+        """Transform a single document according to the previously fit model
+        Parameters
+        ----------
+        sentence : string
+            Line of text that you want to extract all terms from
+        Returns
+        -------
+        synonyms_extracted : 1D array
+            List of terms found in sentence
+        """
         if not self.case_sensitive:
             sentence = sentence.lower()
         synonyms_extracted = []
