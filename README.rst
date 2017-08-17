@@ -1,8 +1,8 @@
 This project has moved to `Flash Text <https://github.com/vi3k6i5/flashtext>`_. 
 -----------------------------------------
 
-:strike: synonym-extractor
-==========================
+synonym-extractor
+=================
 
 Synonym Extractor is a python library that is loosely based on `Aho-Corasick algorithm
 <https://en.wikipedia.org/wiki/Aho%E2%80%93Corasick_algorithm>`_.
