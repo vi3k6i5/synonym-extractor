@@ -54,6 +54,7 @@ class SynonymExtractor(object):
         self._white_space_chars = set(['.', '\t', '\n', '\a', ' '])
         self.synonym_trie_dict = dict()
         self.case_sensitive = case_sensitive
+        print("This project has been depricated. Please use FlashText https://github.com/vi3k6i5/flashtext instead.")
 
     def _set_white_space_chars(self, white_space_chars):
         """use this method if you want to replace the inbuilt white space chars

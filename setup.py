@@ -17,7 +17,7 @@ class PyTest(Command):
 
 setup(
     name='synonym-extractor',
-    version='0.1.6',
+    version='0.1.7',
     url='http://github.com/vi3k6i5/synonym-extractor',
     author='Vikash Singh',
     author_email='vikash.duliajan@gmail.com',
