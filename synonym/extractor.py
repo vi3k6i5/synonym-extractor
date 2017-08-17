@@ -2,6 +2,7 @@ import os
 import warnings
 
 # Adding deprication warning
+warnings.simplefilter('always', DeprecationWarning)
 warnings.warn("This project has been depricated. " +
               "Please use FlashText https://github.com/vi3k6i5/flashtext instead.", DeprecationWarning)
 
