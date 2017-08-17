@@ -125,7 +125,7 @@ class SynonymExtractor(object):
                 self.add_to_synonym(synonym_name, clean_name)
 
     def get_synonyms_from_sentence(self, sentence):
-        """Transform a single document according to the previously fit model
+        """get synonyms from the input sentence.
         Parameters
         ----------
         sentence : string
